@@ -1,3 +1,1 @@
 # LSnakeD
-dlsjfklhdklgjhdfjhg
-dfkjogklidf

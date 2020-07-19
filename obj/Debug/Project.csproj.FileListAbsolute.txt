@@ -1,0 +1,9 @@
+D:\Max\LSnakeD\LSnakeD\bin\Debug\Project.exe.config
+D:\Max\LSnakeD\LSnakeD\bin\Debug\Project.exe
+D:\Max\LSnakeD\LSnakeD\bin\Debug\Project.pdb
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.csprojAssemblyReference.cache
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.Properties.Resources.resources
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.csproj.GenerateResource.cache
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.csproj.CoreCompileInputs.cache
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.exe
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.pdb
