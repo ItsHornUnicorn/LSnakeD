@@ -7,3 +7,4 @@ D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.csproj.GenerateResource.cache
 D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.csproj.CoreCompileInputs.cache
 D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.exe
 D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.pdb
+D:\Max\LSnakeD\LSnakeD\obj\Debug\Project.Form1.resources

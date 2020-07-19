@@ -5,12 +5,18 @@ namespace Project
 {
     class LevelController : IController
     {
-        //Spawn snake
-        //Spawn LSD
-        //
+        private Snake snake;
+
+        public Snake Snake { get => snake; set => snake = value; }
+
         public void Init()
         {
-            MessageBox.Show("Level Controller started");
+            Snake = new Snake();
+        }
+
+        public void Update()
+        {
+            Snake.Move();
         }
     }
 }
