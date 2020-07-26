@@ -22,6 +22,7 @@ namespace Project
 
             GameController.GameLoopedWithoutParams += DrawBackground;
             GameController.GameLooped += DrawSnake;
+            GameController.GameLoopedWithoutParams += DrawFood;
 
             gameController = new GameController();
 
@@ -54,16 +55,23 @@ namespace Project
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            DrawBackground();
+            //DrawBackground();
         }
 
+        public void DrawFood()
+        {
+
+            LevelController lc = GameController.gm.FindController<LevelController>();
+            DrawRect(lc.Pickupable.Coords.X, lc.Pickupable.Coords.Y, 10, 10, Color.White);
+            
+        }
 
         public void DrawSnake(List<Point> snakeCoords)
         {
             
             foreach (var cell in snakeCoords)
             {
-                DrawRect(cell.X, cell.Y, Color.White);
+                DrawRect(cell.X, cell.Y, 10, 10, Color.White);
             }
         }
 
@@ -74,21 +82,16 @@ namespace Project
             r = (byte)random.Next(0, 255);
             g = (byte)random.Next(0, 255);
             b = (byte)random.Next(0, 255);
+            var color = Color.FromArgb(r, g, b);
 
-
-            Graphics graphics = CreateGraphics();
-            SolidBrush solidBrush = new SolidBrush(Color.FromArgb(r, g, b));
-            graphics.FillRectangle(solidBrush, new Rectangle(0, 0, 1000, 1000));
-
-            solidBrush.Dispose();
-            graphics.Dispose();
+            DrawRect(0, 0, 1000, 1000, color);
         }
 
-        private void DrawRect(int x, int y, Color color)
+        private void DrawRect(int x, int y, int width, int height, Color color)
         {
             Graphics g = CreateGraphics();
             SolidBrush solidBrush = new SolidBrush(color);
-            g.FillRectangle(solidBrush, new Rectangle(x, y, 10, 10));
+            g.FillRectangle(solidBrush, new Rectangle(x, y, width, height));
 
             solidBrush.Dispose();
             g.Dispose();
@@ -98,6 +101,7 @@ namespace Project
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             GameController.GameLoopedWithoutParams -= DrawBackground;
+            LevelController.FoodGenerated -= DrawFood;
             GameController.GameLooped -= DrawSnake;
         }
     }

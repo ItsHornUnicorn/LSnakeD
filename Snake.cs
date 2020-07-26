@@ -20,6 +20,7 @@ namespace Project
 
         public void Move()
         {
+            
             // Calc a new position of the head
             Point newHeadPosition = new Point(
                 SnakeCoords[0].X + Direction.CurrentSnakeDirection.X,
@@ -31,6 +32,20 @@ namespace Project
 
             // Remove the last element
             SnakeCoords.RemoveAt(SnakeCoords.Count - 1);
+
+
+            LevelController lc = GameController.gm.FindController<LevelController>();
+            CheckForCollision(lc.Pickupable);
+        }
+
+        public void CheckForCollision(Pickupable pickupable)
+        {
+            if (SnakeCoords[0] == pickupable.Coords)
+            {
+                SnakeCoords.Add(new Point(pickupable.Coords.X, pickupable.Coords.Y));
+                LevelController lc = GameController.gm.FindController<LevelController>();
+                lc.GenerateNewPickupable();
+            }
         }
 
     }
