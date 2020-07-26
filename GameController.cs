@@ -15,64 +15,79 @@ namespace Project
         private Form mainForm;
 
         public static event Action<List<Point>> GameLooped;
-
+        public static event Action GameLoopedWithoutParams;
+        public static GameController gm { get; set; }
 
         public GameController()
         {
-            MessageBox.Show("Game Controller started");
-
             Init();
-            StartTimer();
         }
 
         public void Init()
         {
+            gm = this;
             mainForm = Form1.MainForm;
+
             Controllers.Add(new LevelController());
+            Controllers.Add(new TimeController());
 
             foreach (var controller in Controllers)
             {
                 controller.Init();
             }
+
+            TimeController timeController = FindController<TimeController>();
+            timeController.Timer.Tick += GameLoop;
+            
+
+            
         }
 
 
-        private void StartTimer()
-        {
-            // Create a timer for the GameLoop method
-            var timer = new Timer();
-            timer.Tick += GameLoop;
-            timer.Interval = 1000;
-            timer.Start();
-        }
         private void GameLoop(object sender, System.EventArgs e)
         {
-            foreach (var controller in Controllers)
-            {
-                if (controller is LevelController)
-                {
-                    ((LevelController)controller).Update();
-                }
-            }
+
+            LevelController lc = FindController<LevelController>();
+            lc.Update();
 
 
+
+
+            OnGameLoopedWithoutParams();
             OnGameLooped();
         }
 
-        public void OnGameLooped()
+        protected void OnGameLooped()
         {
 
             List<Point> snakeCoords = null;
+            LevelController lc = FindController<LevelController>();
 
+            snakeCoords = lc.Snake.SnakeCoords;
+
+            
+
+            GameLooped?.Invoke(snakeCoords);
+        }
+
+        protected void OnGameLoopedWithoutParams()
+        {
+            GameLoopedWithoutParams?.Invoke();
+        }
+
+        public T FindController<T>() where T: class  
+        {
             foreach (var controller in Controllers)
             {
-                if (controller is LevelController)
+                if (controller is T)
                 {
-                    snakeCoords = ((LevelController)controller).Snake.SnakeCoords;
+                    return (controller as T);
                 }
             }
 
-            GameLooped?.Invoke(snakeCoords);
+            return null;
+
+
         }
     }
 }

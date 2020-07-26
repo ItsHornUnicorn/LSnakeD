@@ -13,18 +13,21 @@ namespace Project
     public partial class Form1 : Form
     {
         public static Form MainForm { get; set; }
-
-
         GameController gameController;
+
         public Form1()
         {
             InitializeComponent();
             MainForm = this;
+
+            GameController.GameLoopedWithoutParams += DrawBackground;
             GameController.GameLooped += DrawSnake;
 
             gameController = new GameController();
 
         }
+
+        
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -51,16 +54,34 @@ namespace Project
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            //DrawSnake();
+            DrawBackground();
         }
 
 
         public void DrawSnake(List<Point> snakeCoords)
         {
+            
             foreach (var cell in snakeCoords)
             {
-                DrawRect(cell.X, cell.Y, Color.Green);
+                DrawRect(cell.X, cell.Y, Color.White);
             }
+        }
+
+        private void DrawBackground()
+        {
+            byte r, g, b;
+            Random random = new Random();
+            r = (byte)random.Next(0, 255);
+            g = (byte)random.Next(0, 255);
+            b = (byte)random.Next(0, 255);
+
+
+            Graphics graphics = CreateGraphics();
+            SolidBrush solidBrush = new SolidBrush(Color.FromArgb(r, g, b));
+            graphics.FillRectangle(solidBrush, new Rectangle(0, 0, 1000, 1000));
+
+            solidBrush.Dispose();
+            graphics.Dispose();
         }
 
         private void DrawRect(int x, int y, Color color)
@@ -72,6 +93,12 @@ namespace Project
             solidBrush.Dispose();
             g.Dispose();
 
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            GameController.GameLoopedWithoutParams -= DrawBackground;
+            GameController.GameLooped -= DrawSnake;
         }
     }
 }

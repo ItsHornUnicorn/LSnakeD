@@ -3,13 +3,6 @@ using System.Drawing;
 
 namespace Project
 {
-    public enum DirectionEnum
-    {
-        Left,
-        Right,
-        Up,
-        Down
-    }
 
     public static class Direction
     {
